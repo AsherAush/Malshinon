@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 
 namespace Malshinon.Moduls
 {
-    internal class reports
+    public class Reports
     {
-        public int Id { get; set; }
-        public int ReporterId { get; set; }
-        public int TargetId { get; set; }
-        public string ReporText { get; set; }
-        public DateTime SubmittedAt { get; set; }
-        public reports(int id, int reporterId, int targetId, string reportText, DateTime submittedAt)
+        public int ReporterId { get;  }
+        public int TargetId { get;  }
+        public string Text { get; }
+    
+
+    public Reports(int reporterId, int targetId, string text)
         {
-            Id = id;
             ReporterId = reporterId;
             TargetId = targetId;
-            ReporText = reportText;
-            SubmittedAt = submittedAt;
+            Text = text;
         }
     }
 }
