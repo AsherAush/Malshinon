@@ -8,36 +8,19 @@ using MySql.Data.MySqlClient;
 
 namespace Malshinon.Dal
 {
-    internal class PeopleDal
+    internal static class PeopleDal
     {
-
-
-        private readonly string _connectionString;
-
-        public PeopleDal(string connectionString)
+        public static void AddPeople(People people)
         {
-            _connectionString = connectionString;
+            string sql = $@"  
+                          INSERT INTO People(firstName, lastName, secretCode, type)  
+                          VALUES ('{people.FirstName}', '{people.LastName}','{people.SecretCode}','{people.Type}');";
+
+            //int printmassage =  DBConnection.ExecuteNonQuery(sql);
+            //Console.WriteLine($"{printmassage}  rows insterted");
         }
 
-        public int InsertPerson(People people)
-        {
-            var conn = new MySqlConnection(_connectionString);
-            conn.Open();
 
-            string sql = @"INSERT INTO People (first_name, last_name, secret_code, type)
-                       VALUES (@first, @last, @code, @type)";
-            var cmd = new MySqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@first", people.FirstName);
-            cmd.Parameters.AddWithValue("@last", people.LastName);
-            cmd.Parameters.AddWithValue("@code", people.SecretCode);
-            cmd.Parameters.AddWithValue("@type", people.Type.ToString().ToLower());
-
-            cmd.ExecuteNonQuery();
-            int newId = (int)cmd.LastInsertedId;
-
-            return newId;
-        }
     }
-
 }
 

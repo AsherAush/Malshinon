@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbConection
+namespace Malshinon.Dal
 
 {
     internal static class DBConnection
@@ -69,6 +69,17 @@ namespace DbConection
             var cmd = Command(sql);
             var rdr = Send(conn, cmd);
             return Parse(rdr);
+        }
+
+        public static int ExecuteNonQuery(string sql, string connectionString = null)
+        {
+            using (var conn = Connect(connectionString))
+            {
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    return cmd.ExecuteNonQuery();
+                }
+            }
         }
 
 
