@@ -1,23 +1,24 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
-namespace Malshinon.Dal
 
+namespace Malshinon.DAL
 {
     internal static class DBConnection
     {
         public static MySqlConnection Connect(string cs = null)
         {
             var connStr = string.IsNullOrWhiteSpace(cs)
-                ? "server=127.0.0.1;uid=root;database=malshinon"
-                : cs;
+                ? "server=127.0.0.1;uid=root;database=malshinonDB"
+            : cs;
 
 
-            var conn = new MySqlConnection(connStr);
+            MySqlConnection conn = new MySqlConnection(connStr);
             conn.Open();
             return conn;
         }
@@ -61,9 +62,7 @@ namespace Malshinon.Dal
         }
 
 
-        public static List<Dictionary<string, object>> Execute(
-            string sql,
-            string connectionString = null)
+        public static List<Dictionary<string, object>> Execute(string sql, string connectionString = null)
         {
             var conn = Connect(connectionString);
             var cmd = Command(sql);
@@ -81,6 +80,7 @@ namespace Malshinon.Dal
                 }
             }
         }
+
 
 
         public static void PrintResult(List<Dictionary<string, object>> keyValuePairs)
@@ -101,3 +101,5 @@ namespace Malshinon.Dal
         }
     }
 }
+
+
