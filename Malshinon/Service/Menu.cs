@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Malshinon.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using ZstdSharp.Unsafe;
@@ -32,6 +34,7 @@ namespace Malshinon.Service
                     case 2:
                         break;
                     case 3:
+                            ShowSecretCodeByName();
                         break;
                     case 4:
                         break;
@@ -47,6 +50,21 @@ namespace Malshinon.Service
                 {
                     Console.WriteLine("please enter a number:");
                 }
+            }
+        }
+
+        public static void ShowSecretCodeByName()
+        {
+            Console.WriteLine("Enter the name of the person you are looking for.");
+            string name = Console.ReadLine();
+            string show = PeopleDAL.GetSecretCodeByName(name);
+            if (show != null)
+            {
+                Console.WriteLine($"The code for {name}  is: {show}.");
+            }
+            else
+            {
+                Console.WriteLine($"The system did not find a person by that {name}.");
             }
         }
     }

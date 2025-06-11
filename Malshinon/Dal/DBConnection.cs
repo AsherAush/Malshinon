@@ -14,7 +14,7 @@ namespace Malshinon.DAL
         public static MySqlConnection Connect(string cs = null)
         {
             var connStr = string.IsNullOrWhiteSpace(cs)
-                ? "server=127.0.0.1;uid=root;database=malshinonDB"
+                ? "server=127.0.0.1;uid=root;database=malshinon"
             : cs;
 
 
