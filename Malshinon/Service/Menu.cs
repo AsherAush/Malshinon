@@ -30,7 +30,8 @@ namespace Malshinon.Service
                 switch (choich)
                 {
                     case 1:
-                        break;
+                            ReporterService.ServiceReport();
+                            break;
                     case 2:
                         break;
                     case 3:

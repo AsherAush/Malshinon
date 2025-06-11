@@ -19,7 +19,6 @@ namespace Malshinon.DAL
                 return personId.Value;
 
             string secretCode = Guid.NewGuid().ToString();
-
               
             string fullName = IsSecretCodeFormat(nameOrCode) ? "Unknown" : nameOrCode;
 
@@ -51,7 +50,7 @@ namespace Malshinon.DAL
             if (result.Count == 0)
                 return null;
 
-            return (string)result[0]["secret_code"];
+            return result[0]["secret_code"].ToString();
         }
 
         private static bool IsSecretCodeFormat(string input)
