@@ -44,6 +44,24 @@ namespace Malshinon.Dal
             DBConnection.ExecuteNonQuery (updateNumTarget);
 
 
+            //The following lines check with the agent the potential for an effective agent
+            //Checks if he has entered more than 10 reports
+            //And if so, it checks whether the average of its length is 100
+            if (countReport > 10)
+            {
+                string avgMsgLengthQwery =
+                    $"SELECT AVG(CHAR_LENGTH(text)) AS atl FROM intelreports WHERE reporter_id = {rprId}";
+                var avgMsgLength = DBConnection.Execute(avgMsgLengthQwery);
+                int countAvg = Convert.ToInt32(avgMsgLength[0]["atl"]);
+                //Console.WriteLine(countAvg);
+                if (countAvg > 5)
+                {
+                    string insertPotentialQwery =
+                    $"UPDATE people SET Potential_for = 'Effective agent' WHERE id = {rprId}";
+                    DBConnection.ExecuteNonQuery(insertPotentialQwery);
+                }
+
+            }
 
 
 
