@@ -53,7 +53,6 @@ namespace Malshinon.Dal
                     $"SELECT AVG(CHAR_LENGTH(text)) AS atl FROM intelreports WHERE reporter_id = {rprId}";
                 var avgMsgLength = DBConnection.Execute(avgMsgLengthQwery);
                 int countAvg = Convert.ToInt32(avgMsgLength[0]["atl"]);
-                //Console.WriteLine(countAvg);
                 if (countAvg > 5)
                 {
                     string insertPotentialQwery =
@@ -62,8 +61,18 @@ namespace Malshinon.Dal
                 }
 
             }
+            string ifHeve3ReportsIn15MinutsQwery =
+                $"SELECT CASE  WHEN COUNT(*) >= 3 THEN TRUE ELSE FALSE END AS has_alert " +
+                $"FROM intelreports" +
+                $"WHERE target_id = {trgId}  AND timestamp >= NOW() - INTERVAL 15 MINUTE;";
+            int ifHeve3ReportsIn15Minuts = Convert.ToInt32( DBConnection.Execute(ifHeve3ReportsIn15MinutsQwery));
 
-
+            if (ifHeve3ReportsIn15Minuts == 1 || (countTerget > 20) )
+            {
+                string insertPotentialQwery =
+                    $"UPDATE people SET Potential_for = 'Danger' WHERE id = {trgId}";
+                DBConnection.ExecuteNonQuery(insertPotentialQwery);
+            }
 
 
 
